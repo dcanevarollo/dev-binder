@@ -10,5 +10,8 @@
     {
       "path": "./tsconfig.app.json"
     }
-]
+  ],
+  "compilerOptions": {
+    "experimentalDecorators": true
+  }
 }
