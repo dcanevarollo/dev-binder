@@ -4,3 +4,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/dev_binder
     username: dcanevarollo
     password: j672fb3i
+
+  security:
+    ignored:
+      - "*.bundle.*"

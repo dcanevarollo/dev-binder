@@ -14,6 +14,7 @@ public class File {
     private UUID id;
 
     @ManyToOne
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @Column(nullable = false)

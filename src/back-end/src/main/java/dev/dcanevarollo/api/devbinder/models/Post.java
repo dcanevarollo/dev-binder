@@ -21,6 +21,7 @@ public class Post {
     private UUID id;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(nullable = false)
