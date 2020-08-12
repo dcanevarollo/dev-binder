@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { SignInComponent } from './views/sign-in/sign-in.component';
+
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./views/sign-in/sign-in.component').then(
-        (m) => m.SignInComponent
-      ),
+    component: SignInComponent,
   },
 ];
 
