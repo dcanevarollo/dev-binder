@@ -1,5 +1,5 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
@@ -8,10 +8,7 @@ import { AppComponent } from './app.component';
 import { SignInComponent } from './views/sign-in/sign-in.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SignInComponent,
-  ],
+  declarations: [AppComponent, SignInComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -19,6 +16,6 @@ import { SignInComponent } from './views/sign-in/sign-in.component';
     MatToolbarModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

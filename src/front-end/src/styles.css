@@ -5,7 +5,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -15,7 +16,9 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-body, input, button {
+body,
+input,
+button {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   color: white;
   letter-spacing: 0.1em;
