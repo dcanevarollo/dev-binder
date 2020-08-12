@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Dev Binder';
+  logo = '../assets/images/logo.svg';
 }

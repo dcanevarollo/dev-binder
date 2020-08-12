@@ -1,4 +1,9 @@
 .container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
+}
+
+mat-toolbar {
+  height: 70px;
+  padding: 0 40px;
 }
