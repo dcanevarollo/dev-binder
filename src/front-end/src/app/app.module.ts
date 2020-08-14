@@ -8,26 +8,18 @@ import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 // Modules
 import { AppRoutingModule } from './app-routing.module';
 
 // Components
 import { AppComponent } from './app.component';
-import { SignInComponent } from './views/sign-in/sign-in.component';
-import { FormFieldComponent } from './shared/components/form-field/form-field.component';
-
-// Services
-import { AppService } from './app.service';
-import { HomeComponent } from './views/home/home.component';
+import { SignInComponent } from './modules/account/sign-in/sign-in.component';
+import { HomeComponent } from './modules/social/home/home.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SignInComponent,
-    FormFieldComponent,
-    HomeComponent,
-  ],
+  declarations: [AppComponent, SignInComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -37,8 +29,9 @@ import { HomeComponent } from './views/home/home.component';
     MatToolbarModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatInputModule,
   ],
-  providers: [AppService],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
