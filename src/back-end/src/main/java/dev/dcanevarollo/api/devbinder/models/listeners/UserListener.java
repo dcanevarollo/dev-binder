@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 @Component
 public class UserListener {
 
-    static PasswordEncoder encoder;
+    static PasswordEncoder passwordEncoder;
 
     @Autowired
-    public void init(PasswordEncoder encoder) {
-        UserListener.encoder = encoder;
+    public void initEncoder(PasswordEncoder passwordEncoder) {
+        UserListener.passwordEncoder = passwordEncoder;
     }
 
     @PrePersist
@@ -28,7 +28,7 @@ public class UserListener {
         String password = userInstance.getPassword();
 
         if (password != null)
-            userInstance.setPassword(encoder.encode(password));
+            userInstance.setPassword(passwordEncoder.encode(password));
     }
 
 }

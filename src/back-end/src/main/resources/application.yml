@@ -5,8 +5,13 @@ spring:
     username: dcanevarollo
     password: j672fb3i
 
+security:
+  ignored:
+    - "*.bundle.*"
+
 server:
   error:
+    include-stacktrace: never
     whitelabel:
       enabled: false
-    include-stacktrace: never
+
