@@ -6,7 +6,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
 
 @Component
@@ -20,7 +19,6 @@ public class UserListener {
     }
 
     @PrePersist
-    @PreUpdate
     public void beforeSave(final User userInstance) {
         if (userInstance.getCreatedAt() == null)
             userInstance.setCreatedAt(LocalDateTime.now());

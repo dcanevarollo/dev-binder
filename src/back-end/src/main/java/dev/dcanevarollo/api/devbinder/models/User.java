@@ -43,6 +43,12 @@ public class User implements UserDetails {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
+    @Transient
+    private String githubUrl;
+
     @ManyToMany
     @JoinTable(
             name = "user_tech",
@@ -90,6 +96,10 @@ public class User implements UserDetails {
     @JsonIgnore
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getGithubUrl() {
+        return "https://github.com/" + username;
     }
 
 }

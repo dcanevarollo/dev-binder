@@ -8,6 +8,8 @@ export class User {
   bio: string;
   currentJob: string;
   createdAt: string;
+  avatarUrl: string;
+  githubUrl: string;
   techs: Tech[];
   posts: Post[];
   followers: User[];

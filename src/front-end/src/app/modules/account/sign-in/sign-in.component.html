@@ -11,7 +11,7 @@
 
   <div class="form-container">
     <div class="form-box">
-      <form role="form" (submit)="signIn()">
+      <form (ngSubmit)="handleSubmit()">
         <mat-form-field apperance="outline">
           <mat-label>Usuário</mat-label>
           <input matInput type="text" name="username" [(ngModel)]="credentials.username" autocomplete="off">
