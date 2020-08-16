@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { AuthService } from './modules/auth/auth.service';
 
 @Component({
@@ -9,21 +7,21 @@ import { AuthService } from './modules/auth/auth.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  private readonly accessToken = environment.access_token;
+  logo = '../assets/images/logo.svg';
 
-  public logo = '../assets/images/logo.svg';
+  signed = false;
 
-  public signed = false;
-
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    const token = localStorage.getItem(this.accessToken);
+    this.authService.authEmitter.subscribe(
+      (signed: boolean) => this.signed = signed
+    );
 
-    if (token) {
-      this.signed = true;
+    this.authService.bootstrap();
+  }
 
-      this.router.navigate(['home']);
-    } else this.router.navigate(['auth']);
+  logout(): void {
+    this.authService.logout();
   }
 }

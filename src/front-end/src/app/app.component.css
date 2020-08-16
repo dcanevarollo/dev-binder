@@ -4,6 +4,8 @@
 }
 
 mat-toolbar {
+  display: inline-flex;
+  justify-content: space-between;
   height: 70px;
   padding: 0 40px;
 }

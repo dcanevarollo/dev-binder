@@ -35,6 +35,10 @@ export default class ExceptionHandler extends HttpExceptionHandler {
 
         break;
       }
+      case 401: {
+        message = 'Você precisa estar autenticado para acessar esse recurso';
+        break;
+      }
       case 422: {
         message = 'Erro de validação';
 
@@ -51,6 +55,6 @@ export default class ExceptionHandler extends HttpExceptionHandler {
         break;
     }
 
-    return ctx.response.status(error.status).json(message);
+    return ctx.response.status(error.status).json({ message });
   }
 }

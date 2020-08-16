@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { User } from 'src/app/shared/models/user.model';
@@ -24,7 +24,9 @@ interface GithubResponse {
 export class AuthService {
   private readonly resourceUrl = `${environment.api}/auth`;
 
-  private readonly accessToken = environment.access_token;
+  private readonly accessToken = '@dev-binder/access-token';
+
+  authEmitter = new EventEmitter<boolean>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -40,6 +42,8 @@ export class AuthService {
         .post<Token>(`${this.resourceUrl}/login`, data)
         .toPromise();
 
+      this.authEmitter.emit(true);
+
       localStorage.setItem(this.accessToken, JSON.stringify(token));
 
       this.router.navigate(['home']);
@@ -54,13 +58,30 @@ export class AuthService {
 
   async logout(): Promise<void> {
     try {
-      await this.http.delete(`${this.resourceUrl}/logout`).toPromise();
+      const { token } = JSON.parse(localStorage.getItem(this.accessToken));
+
+      await this.http.delete(`${this.resourceUrl}/logout`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }).toPromise();
     } catch (error) {
       console.error(error.error?.message);
     } finally {
+      this.authEmitter.emit(false);
+
       localStorage.removeItem(this.accessToken);
 
       this.router.navigate(['auth']);
     }
+  }
+
+  bootstrap(): void {
+    const token = localStorage.getItem(this.accessToken);
+
+    // TODO : handle expiration date
+    if (token) {
+      this.authEmitter.emit(true);
+
+      this.router.navigate(['home'])
+    } else this.router.navigate(['auth']);
   }
 }
