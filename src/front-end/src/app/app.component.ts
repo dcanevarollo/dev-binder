@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccountService } from './modules/account/account.service';
-import { Account } from './shared/contracts/auth';
+import { environment } from 'src/environments/environment';
+import { AuthService } from './modules/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,20 +9,21 @@ import { Account } from './shared/contracts/auth';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'Dev Binder';
+  private readonly accessToken = environment.access_token;
 
-  logo = '../assets/images/logo.svg';
+  public logo = '../assets/images/logo.svg';
 
-  signed = false;
+  public signed = false;
 
-  constructor(private accountService: AccountService, private router: Router) {
-    if (this.signed) this.router.navigate(['home']);
-    else this.router.navigate(['account']);
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.accountService.accountEmitter.subscribe(
-      (account: Account) => this.signed = account.signed
-    );
+    const token = localStorage.getItem(this.accessToken);
+
+    if (token) {
+      this.signed = true;
+
+      this.router.navigate(['home']);
+    } else this.router.navigate(['auth']);
   }
 }

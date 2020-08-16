@@ -1,7 +1,6 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Account } from '../../shared/contracts/auth';
 import { User } from 'src/app/shared/models/user.model';
 import { Router } from '@angular/router';
 
@@ -22,12 +21,10 @@ interface GithubResponse {
 @Injectable({
   providedIn: 'root',
 })
-export class AccountService {
+export class AuthService {
   private readonly api = `${environment.api}/users`;
 
-  private readonly accessKey = '@dev-binder/access-token';
-
-  public accountEmitter = new EventEmitter<Account>();
+  private readonly accessToken = environment.access_token;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -39,13 +36,11 @@ export class AccountService {
 
   async login(data: User): Promise<void> {
     try {
-      const { auth, user } = await this.http
-        .post<{ auth: Token, user: User }>(this.api, data)
+      const token = await this.http
+        .post<Token>(this.api, data)
         .toPromise();
 
-      this.accountEmitter.emit({ signed: true, user });
-
-      localStorage.setItem(this.accessKey, auth.token);
+      localStorage.setItem(this.accessToken, JSON.stringify(token));
 
       this.router.navigate(['home']);
     } catch (error) {
@@ -61,13 +56,11 @@ export class AccountService {
     try {
       await this.http.delete('logout').toPromise();
     } catch (error) {
-      console.error(error.response?.data);
+      console.error(error.error?.message);
     } finally {
-      this.accountEmitter.emit({ signed: false, user: null })
+      localStorage.removeItem(this.accessToken);
 
-      localStorage.removeItem(this.accessKey);
-
-      this.router.navigate(['account']);
+      this.router.navigate(['auth']);
     }
   }
 }

@@ -20,7 +20,7 @@ export class StoreUser {
     private auth: AuthContract,
   ) {}
 
-  public async execute(): Promise<{ auth: Token; user: User }> {
+  public async execute(): Promise<Token> {
     const { data, auth } = this;
 
     let user = await User.findBy('username', data.username);
@@ -39,6 +39,6 @@ export class StoreUser {
       token = await auth.login(user, exp);
     }
 
-    return { auth: token, user };
+    return token;
   }
 }

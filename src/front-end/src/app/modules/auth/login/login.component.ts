@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AccountService } from '../account.service';
+import { AuthService } from '../auth.service';
 import { User } from '../../../shared/models/user.model';
 
 @Component({
   selector: 'app-sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css'],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
 })
-export class SignInComponent {
+export class LoginComponent {
   credentials: User = { username: '', password: '' };
 
-  constructor(private service: AccountService, private router: Router) {}
+  constructor(private service: AuthService) {}
 
   async login(): Promise<void> {
     const { username, password } = this.credentials;

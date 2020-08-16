@@ -8,8 +8,8 @@ export default class UsersController {
 
     const service = new StoreUser(data, auth);
 
-    const authentication = await service.execute();
+    const token = await service.execute();
 
-    return response.created(authentication);
+    return response.created(token);
   }
 }
