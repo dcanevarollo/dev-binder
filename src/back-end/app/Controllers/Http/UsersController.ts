@@ -1,15 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
-import UserValidator from 'App/Validators/UserValidator';
-import { StoreUser } from 'App/Services/User/StoreUser';
 
 export default class UsersController {
-  public async store({ request, response, auth }: HttpContextContract) {
-    const data = await request.validate(UserValidator);
+  public async index({}: HttpContextContract) {}
 
-    const service = new StoreUser(data, auth);
-
-    const token = await service.execute();
-
-    return response.created(token);
-  }
+  public async show({}: HttpContextContract) {}
 }

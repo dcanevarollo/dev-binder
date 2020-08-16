@@ -22,7 +22,7 @@ interface GithubResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly api = `${environment.api}/users`;
+  private readonly resourceUrl = `${environment.api}/auth`;
 
   private readonly accessToken = environment.access_token;
 
@@ -37,7 +37,7 @@ export class AuthService {
   async login(data: User): Promise<void> {
     try {
       const token = await this.http
-        .post<Token>(this.api, data)
+        .post<Token>(`${this.resourceUrl}/login`, data)
         .toPromise();
 
       localStorage.setItem(this.accessToken, JSON.stringify(token));
@@ -54,7 +54,7 @@ export class AuthService {
 
   async logout(): Promise<void> {
     try {
-      await this.http.delete('logout').toPromise();
+      await this.http.delete(`${this.resourceUrl}/logout`).toPromise();
     } catch (error) {
       console.error(error.error?.message);
     } finally {

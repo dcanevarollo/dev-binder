@@ -7,7 +7,7 @@ interface Token {
   expires_at?: string;
 }
 
-export class StoreUser {
+export class Login {
   constructor(
     private data: {
       name: string;
@@ -25,18 +25,18 @@ export class StoreUser {
 
     let user = await User.findBy('username', data.username);
 
-    const exp = { expiresIn: '7 days' };
+    const expiration = { expiresIn: '7 days' };
 
     let token: Token;
 
     if (user) {
       const { username, password } = data;
 
-      token = await auth.attempt(username, password, exp);
+      token = await auth.attempt(username, password, expiration);
     } else {
       user = await User.create(data);
 
-      token = await auth.login(user, exp);
+      token = await auth.login(user, expiration);
     }
 
     return token;
