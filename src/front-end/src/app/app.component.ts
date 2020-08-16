@@ -1,19 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AccountService } from './modules/account/account.service';
+import { Account } from './shared/contracts/auth';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Dev Binder';
+
   logo = '../assets/images/logo.svg';
 
-  constructor(private router: Router) {
-    const token = localStorage.getItem('@dev-binder/access-token');
+  signed = false;
 
-    if (token) router.navigateByUrl('home');
-    else router.navigateByUrl('account');
+  constructor(private accountService: AccountService, private router: Router) {
+    if (this.signed) this.router.navigate(['home']);
+    else this.router.navigate(['account']);
+  }
+
+  ngOnInit(): void {
+    this.accountService.accountEmitter.subscribe(
+      (account: Account) => this.signed = account.signed
+    );
   }
 }

@@ -1,9 +1,6 @@
 import { Post } from './post.model';
 
-export class File {
-  id: string;
+export interface File {
   post: Post;
-  type: string;
-  subtype: string;
   url: string;
 }

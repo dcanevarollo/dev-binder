@@ -1,27 +1,65 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { take } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-
 import { environment } from '../../../environments/environment';
-import { GitHubUser } from '../../shared/contracts/github-user';
+import { GithubResponse } from '../../shared/contracts/github-response';
+import { Account } from '../../shared/contracts/auth';
+import { User } from 'src/app/shared/models/user.model';
+import { Router } from '@angular/router';
+
+export interface Token {
+  type: string;
+  token: string;
+  expires_at: string;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccountService {
-  private readonly apiUrl = `${environment.api}/users`;
+  private readonly api = `${environment.api}/users`;
 
-  constructor(private http: HttpClient) {}
+  public accountEmitter = new EventEmitter<Account>();
 
-  fetchGitHubData(username: string): Promise<GitHubUser> {
+  constructor(private http: HttpClient, private router: Router) {}
+
+  getGithubData(username: string): Promise<GithubResponse> {
     return this.http
-      .get<GitHubUser>(`https://api.github.com/users/${username}`)
+      .get<GithubResponse>(`https://api.github.com/users/${username}`)
       .toPromise();
   }
 
-  storeUser(payload: object): Observable<object> {
-    return this.http.post(this.apiUrl, payload).pipe(take(1));
+  async login(data: User): Promise<void> {
+    try {
+      const { auth, user } = await this.http
+        .post<{ auth: Token, user: User }>(this.api, data)
+        .toPromise();
+
+      this.accountEmitter.emit({ signed: true, user });
+
+      localStorage.setItem('@dev-binder/access-token', auth.token);
+
+      this.router.navigate(['home']);
+    } catch (error) {
+      // TODO : make a beautiful alert message
+      const { error: response } = error;
+
+      console.error(response.errors);
+      alert(response.message);
+    }
+  }
+
+  async logout(): Promise<void> {
+    try {
+      await this.http.delete('logout').toPromise();
+    } catch (error) {
+      console.error(error.response?.data);
+    } finally {
+      this.accountEmitter.emit({ signed: false, user: null })
+
+      localStorage.removeItem('@dev-binder/access-token');
+
+      this.router.navigate(['account']);
+    }
   }
 
 

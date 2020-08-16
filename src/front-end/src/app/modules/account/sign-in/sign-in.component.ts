@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { AccountService } from '../account.service';
+import { User } from '../../../shared/models/user.model';
 
 @Component({
   selector: 'app-sign-in',
@@ -9,28 +9,30 @@ import { AccountService } from '../account.service';
   styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent {
-  payload: object;
-
-  credentials = { username: '', password: '' };
+  credentials: User = { username: '', password: '' };
 
   constructor(private service: AccountService, private router: Router) {}
 
   async handleSubmit(): Promise<void> {
-    const response = await this.service.fetchGitHubData(this.credentials.username);
+    const { username, password } = this.credentials;
 
-    this.payload = {
-      name: response.name,
-      username: response.login,
-      password: this.credentials.password,
-      bio: response.bio,
-      currentJob: response.company,
-      avatarUrl: response.avatar_url,
-    };
+    try {
+      const response = await this.service.getGithubData(username);
 
-    // TODO : handle messages
-    this.service.storeUser(this.payload).subscribe(
-      () => this.router.navigateByUrl('home'),
-      (err) => console.error(err),
-    );
+      const data: User = {
+        name: response.name,
+        username,
+        password,
+        bio: response.bio,
+        current_job: response.company,
+        avatar_url: response.avatar_url,
+      };
+
+      await this.service.login(data);
+    } catch (error) {
+      // TODO : make a beautiful alert message
+      if (error.status === 404) alert('Credenciais inválidas');
+      else console.error(error.message);
+    }
   }
 }

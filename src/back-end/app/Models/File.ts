@@ -10,7 +10,7 @@ import Env from '@ioc:Adonis/Core/Env';
 import Post from './Post';
 
 export default class File extends BaseModel {
-  @column({ isPrimary: true })
+  @column({ isPrimary: true, serializeAs: null })
   public id: string;
 
   @column({ serializeAs: null })

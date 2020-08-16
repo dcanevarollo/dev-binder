@@ -1,16 +1,17 @@
 import { Tech } from './tech.model';
 import { Post } from './post.model';
 
-export class User {
-  id: string;
-  name: string;
+export interface User {
+  id?: string;
+  name?: string;
   username: string;
-  bio: string;
-  currentJob: string;
-  createdAt: string;
-  avatarUrl: string;
-  githubUrl: string;
-  techs: Tech[];
-  posts: Post[];
-  followers: User[];
+  password: string;
+  avatar_url?: string;
+  current_job?: string;
+  bio?: string;
+  github_url?: string;
+  posts?: Post[];
+  followers?: User[];
+  liked_posts?: Post[]
+  techs?: Tech[];
 }

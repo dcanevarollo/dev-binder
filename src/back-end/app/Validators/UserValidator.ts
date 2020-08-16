@@ -16,7 +16,7 @@ export default class UserValidator {
   public cacheKey = this.ctx.routeKey;
 
   public messages = {
-    required: 'The {{ field }} is required',
-    'password.minLength': 'The password must have, at least, 6 characters',
+    required: 'O campo "{{ field }}" é obrigatório',
+    'password.minLength': 'A senha deve ter, pelo menos, 6 caracteres',
   };
 }

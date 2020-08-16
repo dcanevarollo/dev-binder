@@ -8,6 +8,7 @@ import {
   HasMany,
   manyToMany,
   ManyToMany,
+  computed,
 } from '@ioc:Adonis/Lucid/Orm';
 import Post from './Post';
 import Tech from './Tech';
@@ -22,10 +23,10 @@ export default class User extends BaseModel {
   @column()
   public username: string;
 
-  @column()
+  @column({ serializeAs: null })
   public password: string;
 
-  @column()
+  @column({ serializeAs: null })
   public rememberMeToken?: string;
 
   @column()
@@ -42,6 +43,11 @@ export default class User extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime;
+
+  @computed({ serializeAs: 'github_url' })
+  public get githubUrl() {
+    return `https://github.com/${this.username}`;
+  }
 
   @hasMany(() => Post)
   public posts: HasMany<typeof Post>;

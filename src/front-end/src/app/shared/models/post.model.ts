@@ -1,13 +1,16 @@
 import { User } from './user.model';
 import { File } from './file.model';
 
-export class Post {
+export interface Post {
   id: string;
-  user: User;
+  author: User;
   title: string;
   content: string;
-  createdAt: string;
-  updatedAt: string;
-  likes: User[];
+  created_at: {
+    default: string;
+    formatted: string;
+  };
+  updated_at: string;
   files: File[];
+  likes: User[];
 }
