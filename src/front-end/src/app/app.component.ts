@@ -17,8 +17,6 @@ export class AppComponent implements OnInit {
     this.authService.authEmitter.subscribe(
       (signed: boolean) => this.signed = signed
     );
-
-    this.authService.bootstrap();
   }
 
   logout(): void {

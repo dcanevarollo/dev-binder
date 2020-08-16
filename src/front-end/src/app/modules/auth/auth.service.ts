@@ -36,17 +36,19 @@ export class AuthService {
       .toPromise();
   }
 
+  emitAuth(authenticated: boolean): void {
+    this.authEmitter.emit(authenticated);
+  }
+
   async login(data: User): Promise<void> {
     try {
       const token = await this.http
         .post<Token>(`${this.resourceUrl}/login`, data)
         .toPromise();
 
-      this.authEmitter.emit(true);
-
       localStorage.setItem(this.accessToken, JSON.stringify(token));
 
-      this.router.navigate(['home']);
+      this.router.navigate(['']);
     } catch (error) {
       // TODO : make a beautiful alert message
       const { error: response } = error;
@@ -66,22 +68,11 @@ export class AuthService {
     } catch (error) {
       console.error(error.error?.message);
     } finally {
-      this.authEmitter.emit(false);
+      this.emitAuth(false);
 
       localStorage.removeItem(this.accessToken);
 
       this.router.navigate(['auth']);
     }
-  }
-
-  bootstrap(): void {
-    const token = localStorage.getItem(this.accessToken);
-
-    // TODO : handle expiration date
-    if (token) {
-      this.authEmitter.emit(true);
-
-      this.router.navigate(['home'])
-    } else this.router.navigate(['auth']);
   }
 }
