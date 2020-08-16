@@ -27,6 +27,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "luxon": "^1.24.1",
     "pg": "^8.3.0",
+    "phc-bcrypt": "^1.0.3",
     "prettier": "^2.0.5",
     "proxy-addr": "^2.0.6",
     "reflect-metadata": "^0.1.13",

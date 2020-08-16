@@ -7,7 +7,7 @@ export default class UsersSchema extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').primary().defaultTo(this.raw('uuid_generate_v4()'));
       table.string('name').notNullable();
-      table.string('username').notNullable();
+      table.string('username').notNullable().unique();
       table.string('password').notNullable();
       table.string('remember_me_token');
       table.string('avatar_url');
