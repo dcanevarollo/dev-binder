@@ -1,15 +1,22 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { GithubResponse } from '../../shared/contracts/github-response';
 import { Account } from '../../shared/contracts/auth';
 import { User } from 'src/app/shared/models/user.model';
 import { Router } from '@angular/router';
 
-export interface Token {
+interface Token {
   type: string;
   token: string;
   expires_at: string;
+}
+
+interface GithubResponse {
+  login: string;
+  avatar_url: string;
+  name: string;
+  company: string;
+  bio: string;
 }
 
 @Injectable({
@@ -17,6 +24,8 @@ export interface Token {
 })
 export class AccountService {
   private readonly api = `${environment.api}/users`;
+
+  private readonly accessKey = '@dev-binder/access-token';
 
   public accountEmitter = new EventEmitter<Account>();
 
@@ -36,7 +45,7 @@ export class AccountService {
 
       this.accountEmitter.emit({ signed: true, user });
 
-      localStorage.setItem('@dev-binder/access-token', auth.token);
+      localStorage.setItem(this.accessKey, auth.token);
 
       this.router.navigate(['home']);
     } catch (error) {
@@ -56,11 +65,9 @@ export class AccountService {
     } finally {
       this.accountEmitter.emit({ signed: false, user: null })
 
-      localStorage.removeItem('@dev-binder/access-token');
+      localStorage.removeItem(this.accessKey);
 
       this.router.navigate(['account']);
     }
   }
-
-
 }

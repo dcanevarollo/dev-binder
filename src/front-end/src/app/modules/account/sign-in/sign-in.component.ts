@@ -13,7 +13,7 @@ export class SignInComponent {
 
   constructor(private service: AccountService, private router: Router) {}
 
-  async handleSubmit(): Promise<void> {
+  async login(): Promise<void> {
     const { username, password } = this.credentials;
 
     try {
