@@ -30,6 +30,12 @@ export class Login {
     let token: Token;
 
     if (user) {
+      await user
+        .related('tokens')
+        .query()
+        .where('type', 'opaque_token')
+        .delete();
+
       const { username, password } = data;
 
       token = await auth.attempt(username, password, expiration);

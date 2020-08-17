@@ -1,17 +1,17 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
-import { FindUser } from 'App/Services/User/FindUser';
+import User from 'App/Models/User';
 
 export default class UsersController {
   public async index({}: HttpContextContract) {}
 
-  public async show({ params, request, response }: HttpContextContract) {
-    const { id } = params;
+  public async show({ params, response }: HttpContextContract) {
+    const { id: username } = params;
 
-    const query = request.get();
+    const user = await User.findByOrFail('username', username);
 
-    const service = new FindUser(id, query);
-
-    const user = await service.execute();
+    await user.preload((preloader) =>
+      preloader.preload('posts').preload('techs'),
+    );
 
     return response.json(user);
   }

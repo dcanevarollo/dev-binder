@@ -12,6 +12,7 @@ import {
 } from '@ioc:Adonis/Lucid/Orm';
 import Post from './Post';
 import Tech from './Tech';
+import ApiToken from './ApiToken';
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -63,6 +64,9 @@ export default class User extends BaseModel {
 
   @manyToMany(() => Tech)
   public techs: ManyToMany<typeof Tech>;
+
+  @hasMany(() => ApiToken)
+  public tokens: HasMany<typeof ApiToken>;
 
   @beforeSave()
   public static async hashPassword(user: User) {

@@ -5,11 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,11 +20,12 @@ import { MatListModule } from '@angular/material/list';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatSidenavModule,
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
+    MatTooltipModule,
     LayoutModule,
-    MatSidenavModule,
     MatListModule,
   ],
   providers: [],

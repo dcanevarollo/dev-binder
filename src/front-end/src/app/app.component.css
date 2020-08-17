@@ -29,7 +29,7 @@ mat-toolbar {
   transition: ease 0.3s;
 }
 
-.right-side > button:first-of-type img:hover {
+.right-side > button:first-of-type:hover img {
   border: 2px solid #69F0AE;
 }
 
