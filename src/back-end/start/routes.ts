@@ -23,6 +23,7 @@ import Route from '@ioc:Adonis/Core/Route';
 Route.post('auth/login', 'AuthController.login');
 
 Route.group(() => {
+  Route.get('auth', 'AuthController.index');
   Route.delete('auth/logout', 'AuthController.logout');
   Route.resource('users', 'UsersController').only(['index', 'show']);
 }).middleware(['auth']);

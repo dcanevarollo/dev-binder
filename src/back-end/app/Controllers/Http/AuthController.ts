@@ -3,6 +3,12 @@ import UserValidator from 'App/Validators/UserValidator';
 import { Login } from 'App/Services/Auth/Login';
 
 export default class AuthController {
+  public index({ response, auth }: HttpContextContract) {
+    const { user } = auth;
+
+    return response.json(user);
+  }
+
   public async login({ request, response, auth }: HttpContextContract) {
     const data = await request.validate(UserValidator);
 

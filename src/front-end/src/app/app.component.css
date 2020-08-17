@@ -9,3 +9,32 @@ mat-toolbar {
   height: 70px;
   padding: 0 40px;
 }
+
+.right-side {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.right-side > button:first-of-type {
+  margin-right: 20px;
+}
+
+.right-side > button:first-of-type img {
+  width: 22px;
+  height: 22px;
+  border: 2px solid white;
+  border-radius: 50%;
+  transition: ease 0.3s;
+}
+
+.right-side > button:first-of-type img:hover {
+  border: 2px solid #69F0AE;
+}
+
+@media (max-width: 425px) {
+  mat-toolbar > img {
+    display: none;
+  }
+}

@@ -1,9 +1,15 @@
-<mat-toolbar *ngIf="signed" class="mat-elevation-z8">
+<mat-toolbar *ngIf="user" class="mat-elevation-z8">
   <img src="{{ logo }}" alt="Logo">
 
-  <button mat-icon-button (click)="dispatchLogout()">
-    <mat-icon>exit_to_app</mat-icon>
-  </button>
+  <div class="right-side">
+    <button type="button" mat-icon-button>
+      <img src="{{ user.avatar_url }}" alt="{{ user.name }}">
+    </button>
+
+    <button type="button" mat-icon-button (click)="dispatchLogout()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
 
 <div class="container">

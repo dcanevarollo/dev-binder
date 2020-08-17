@@ -26,7 +26,7 @@ export class AuthService {
 
   private readonly accessToken = '@dev-binder/access-token';
 
-  authEmitter = new EventEmitter<boolean>();
+  authEmitter = new EventEmitter<User>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -36,8 +36,17 @@ export class AuthService {
       .toPromise();
   }
 
-  emitAuth(authenticated: boolean): void {
-    this.authEmitter.emit(authenticated);
+  async emitAuth(token: Token | null): Promise<void> {
+    let user: User = null;
+
+    if (token)
+      user = await this.http
+        .get<User>(this.resourceUrl, {
+          headers: { Authorization: `Bearer ${token.token}` },
+        })
+        .toPromise();
+
+    this.authEmitter.emit(user);
   }
 
   async login(data: User): Promise<void> {
@@ -68,7 +77,7 @@ export class AuthService {
     } catch (error) {
       console.error(error.error?.message);
     } finally {
-      this.emitAuth(false);
+      this.emitAuth(null);
 
       localStorage.removeItem(this.accessToken);
 

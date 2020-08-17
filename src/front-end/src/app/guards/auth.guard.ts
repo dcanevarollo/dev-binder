@@ -18,12 +18,12 @@ export class AuthGuard implements CanActivate {
     const token = localStorage.getItem('@dev-binder/access-token')
 
     if (token) {
-      this.authService.emitAuth(true);
+      this.authService.emitAuth(JSON.parse(token));
 
       return true;
     };
 
-    this.authService.emitAuth(false);
+    this.authService.emitAuth(null);
 
     this.router.navigate(['login']);
 
