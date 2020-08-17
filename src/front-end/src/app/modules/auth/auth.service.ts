@@ -38,7 +38,7 @@ export class AuthService {
       .toPromise();
   }
 
-  async emitAuth(token: Token | null): Promise<void> {
+  async emitAuth(token: Token): Promise<void> {
     if (token && !this.user)
       this.user = await this.http
         .get<User>(this.resourceUrl, {

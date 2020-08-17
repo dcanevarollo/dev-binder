@@ -4,6 +4,8 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   Router,
+  CanLoad,
+  Route,
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
@@ -11,13 +13,21 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanLoad {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean> | boolean {
+    return this.verifyAccess();
+  }
+
+  canLoad(route: Route): Observable<boolean> | Promise<boolean> | boolean {
+    return this.verifyAccess();
+  }
+
+  private verifyAccess(): boolean {
     // TODO : handle token expiration date
     const token = localStorage.getItem('@dev-binder/access-token');
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { User } from '../../../shared/models/user.model';
 
@@ -10,7 +11,7 @@ import { User } from '../../../shared/models/user.model';
 export class LoginComponent {
   credentials: User = { username: '', password: '' };
 
-  constructor(private service: AuthService) {}
+  constructor(private service: AuthService, private router: Router) {}
 
   async login(): Promise<void> {
     const { username, password } = this.credentials;
