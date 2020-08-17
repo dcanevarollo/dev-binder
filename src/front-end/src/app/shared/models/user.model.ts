@@ -12,6 +12,6 @@ export interface User {
   github_url?: string;
   posts?: Post[];
   followers?: User[];
-  liked_posts?: Post[]
+  liked_posts?: Post[];
   techs?: Tech[];
 }

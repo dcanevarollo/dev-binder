@@ -101,6 +101,14 @@
           "options": {
             "browserTarget": "front-end:build"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": ".eslintrc.js",
+            "tsConfig": ["tsconfig.app.json"],
+            "exclude": ["**/node_modules/**"]
+          }
         }
       }
     }

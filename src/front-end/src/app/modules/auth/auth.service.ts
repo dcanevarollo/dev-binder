@@ -1,8 +1,8 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 import { User } from 'src/app/shared/models/user.model';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 interface Token {
   type: string;
@@ -71,9 +71,11 @@ export class AuthService {
     try {
       const { token } = JSON.parse(localStorage.getItem(this.accessToken));
 
-      await this.http.delete(`${this.resourceUrl}/logout`, {
-        headers: { Authorization: `Bearer ${token}` },
-      }).toPromise();
+      await this.http
+        .delete(`${this.resourceUrl}/logout`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .toPromise();
     } catch (error) {
       console.error(error.error?.message);
     } finally {

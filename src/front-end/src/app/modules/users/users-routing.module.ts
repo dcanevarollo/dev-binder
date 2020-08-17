@@ -8,11 +8,11 @@ const routes: Routes = [
     path: ':username',
     component: ProfileComponent,
     resolve: { user: ProfileResolver },
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class UsersRoutingModule { }
+export class UsersRoutingModule {}

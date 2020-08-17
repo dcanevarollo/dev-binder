@@ -1,6 +1,6 @@
-import { Component, OnInit , OnDestroy} from '@angular/core';
-import { AuthService } from './modules/auth/auth.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { AuthService } from './modules/auth/auth.service';
 import { User } from './shared/models/user.model';
 
 @Component({
@@ -19,7 +19,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.authSubscription = this.authService.authEmitter.subscribe(
-      (user: User) => this.user = user
+      (user: User) => {
+        this.user = user;
+      },
     );
   }
 
