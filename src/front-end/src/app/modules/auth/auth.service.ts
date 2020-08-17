@@ -72,7 +72,7 @@ export class AuthService {
 
       localStorage.removeItem(this.accessToken);
 
-      this.router.navigate(['auth']);
+      this.router.navigate(['login']);
     }
   }
 }

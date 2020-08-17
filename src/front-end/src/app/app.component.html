@@ -1,7 +1,7 @@
 <mat-toolbar *ngIf="signed" class="mat-elevation-z8">
   <img src="{{ logo }}" alt="Logo">
 
-  <button mat-icon-button (click)="logout()">
+  <button mat-icon-button (click)="dispatchLogout()">
     <mat-icon>exit_to_app</mat-icon>
   </button>
 </mat-toolbar>
