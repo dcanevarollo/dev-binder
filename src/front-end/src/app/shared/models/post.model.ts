@@ -1,5 +1,4 @@
 import { User } from './user.model';
-import { File } from './file.model';
 
 export interface Post {
   id: string;
@@ -10,7 +9,6 @@ export interface Post {
     default: string;
     formatted: string;
   };
-  updated_at: string;
-  files: File[];
+  updated: boolean;
   likes: User[];
 }

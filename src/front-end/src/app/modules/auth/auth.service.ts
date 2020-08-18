@@ -10,12 +10,9 @@ interface Token {
   expires_at: string;
 }
 
-interface GithubResponse {
-  login: string;
-  avatar_url: string;
-  name: string;
-  company: string;
-  bio: string;
+export interface Credentials {
+  username: string;
+  password: string;
 }
 
 @Injectable({
@@ -32,12 +29,6 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getGithubData(username: string): Promise<GithubResponse> {
-    return this.http
-      .get<GithubResponse>(`https://api.github.com/users/${username}`)
-      .toPromise();
-  }
-
   async emitAuth(token: Token): Promise<void> {
     if (token && !this.user)
       this.user = await this.http
@@ -49,7 +40,7 @@ export class AuthService {
     this.authEmitter.emit(this.user);
   }
 
-  async login(data: User): Promise<void> {
+  async login(data: Credentials): Promise<void> {
     try {
       const token = await this.http
         .post<Token>(`${this.resourceUrl}/login`, data)
@@ -69,13 +60,17 @@ export class AuthService {
 
   async logout(): Promise<void> {
     try {
-      const { token } = JSON.parse(localStorage.getItem(this.accessToken));
+      const accessToken = localStorage.getItem(this.accessToken);
 
-      await this.http
-        .delete(`${this.resourceUrl}/logout`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .toPromise();
+      if (accessToken) {
+        const { token } = JSON.parse(accessToken);
+
+        await this.http
+          .delete(`${this.resourceUrl}/logout`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .toPromise();
+      }
     } catch (error) {
       console.error(error.error?.message);
     } finally {

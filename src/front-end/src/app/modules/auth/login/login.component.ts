@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
-import { User } from '../../../shared/models/user.model';
+import { AuthService, Credentials } from '../auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -9,30 +8,11 @@ import { User } from '../../../shared/models/user.model';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  credentials: User = { username: '', password: '' };
+  credentials: Credentials = { username: '', password: '' };
 
   constructor(private service: AuthService, private router: Router) {}
 
-  async login(): Promise<void> {
-    const { username, password } = this.credentials;
-
-    try {
-      const response = await this.service.getGithubData(username);
-
-      const data: User = {
-        name: response.name,
-        username,
-        password,
-        bio: response.bio,
-        current_job: response.company,
-        avatar_url: response.avatar_url,
-      };
-
-      await this.service.login(data);
-    } catch (error) {
-      // TODO : make a beautiful alert message
-      if (error.status === 404) alert('Credenciais inválidas');
-      else console.error(error.message);
-    }
+  login(): void {
+    this.service.login(this.credentials);
   }
 }

@@ -40,8 +40,11 @@ export default class ExceptionHandler extends HttpExceptionHandler {
         break;
       }
       case 403: {
-        if (error.message) message = error.message;
-        else message = 'Você não tem acesso a esse recurso';
+        message = error.message || 'Você não tem acesso a esse recurso';
+        break;
+      }
+      case 404: {
+        message = error.message || 'Recurso não encontrado';
         break;
       }
       case 422: {

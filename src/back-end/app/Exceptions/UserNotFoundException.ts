@@ -9,11 +9,11 @@ import { Exception } from '@poppinss/utils';
 | a status code and error code for every exception.
 |
 | @example
-| new NotAllowedException('message', 500, 'E_RUNTIME_EXCEPTION')
+| new UserNotFoundException('message', 500, 'E_RUNTIME_EXCEPTION')
 |
 */
-export default class NotAllowedException extends Exception {
-  constructor() {
-    super('Você não tem acesso a esse recurso', 403);
+export default class UserNotFoundException extends Exception {
+  constructor(username: string) {
+    super(`Usuário ${username} não encontrado no GitHub`, 404);
   }
 }
