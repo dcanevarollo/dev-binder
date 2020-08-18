@@ -8,11 +8,10 @@ export default class PostsController {
     const { page, user: username } = request.get();
 
     const posts = await Post.query()
-      .preload('author')
-      .withCount('likes')
-      .where(function () {
-        if (username) this.where('username', username);
+      .preload('author', (query) => {
+        if (username) query.where('username', username);
       })
+      .withCount('likes')
       .paginate(page, 20);
 
     return response.ok(posts);
