@@ -5,11 +5,15 @@ export default class UsersController {
   public async show({ params, response }: HttpContextContract) {
     const { username } = params;
 
-    const user = await User.findByOrFail('username', username);
-
-    await user.preload((preloader) =>
-      preloader.preload('posts').preload('techs'),
-    );
+    const user = await User.query()
+      .preload('posts', (postsQuery) => {
+        postsQuery.withCount('likes');
+      })
+      .preload('techs')
+      .withCount('followers')
+      .withCount('following')
+      .where('username', username)
+      .firstOrFail();
 
     return response.json(user);
   }

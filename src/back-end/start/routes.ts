@@ -29,4 +29,9 @@ Route.group(() => {
   Route.resource('posts', 'PostsController').apiOnly().except(['show']);
   Route.post('likes', 'LikesController.store');
   Route.delete('likes/:post_id', 'LikesController.destroy');
+  Route.post('followers', 'FollowersController.store');
+  Route.delete('followers/:user_id', 'FollowersController.destroy');
+  Route.get('techs', 'TechsController.index');
+  Route.post('techs/users', 'TechUserController.store');
+  Route.delete('techs/users/:tech_id', 'TechUserController.destroy');
 }).middleware(['auth']);

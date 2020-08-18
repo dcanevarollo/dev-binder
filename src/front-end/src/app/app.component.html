@@ -13,5 +13,9 @@
 </mat-toolbar>
 
 <div class="container">
-  <router-outlet></router-outlet>
+  <nav *ngIf="user"></nav>
+
+  <main [ngClass]="user && 'with-sidenav'">
+    <router-outlet></router-outlet>
+  </main>
 </div>

@@ -59,6 +59,13 @@ export default class User extends BaseModel {
   })
   public followers: ManyToMany<typeof User>;
 
+  @manyToMany(() => User, {
+    pivotTable: 'followeds',
+    pivotForeignKey: 'follower_id',
+    pivotRelatedForeignKey: 'user_id',
+  })
+  public following: ManyToMany<typeof User>;
+
   @manyToMany(() => Post, { pivotTable: 'likes', serializeAs: 'liked_posts' })
   public likedPosts: ManyToMany<typeof Post>;
 
@@ -71,5 +78,15 @@ export default class User extends BaseModel {
   @beforeSave()
   public static async hashPassword(user: User) {
     if (user.$dirty.password) user.password = await Hash.make(user.password);
+  }
+
+  @computed({ serializeAs: 'followers_count' })
+  public get followersCount() {
+    return Number(this.$extras.followers_count);
+  }
+
+  @computed({ serializeAs: 'following_count ' })
+  public get followingCount() {
+    return Number(this.$extras.following_count);
   }
 }

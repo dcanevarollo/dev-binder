@@ -7,7 +7,7 @@ export default class LikesController {
 
     await auth.user?.related('likedPosts').attach([id]);
 
-    return response.ok(null);
+    return response.created(null);
   }
 
   public async destroy({ params, response, auth }: HttpContextContract) {
