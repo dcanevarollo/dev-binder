@@ -8,8 +8,8 @@ export default class PostsController {
     const { page, user: username } = request.get();
 
     const posts = await Post.query()
-      .preload('author', (query) => {
-        if (username) query.where('username', username);
+      .preload('author', (authorQuery) => {
+        if (username) authorQuery.where('username', username);
       })
       .withCount('likes')
       .paginate(page, 20);

@@ -25,6 +25,8 @@ Route.post('auth/login', 'AuthController.login');
 Route.group(() => {
   Route.get('auth', 'AuthController.index');
   Route.delete('auth/logout', 'AuthController.logout');
-  Route.resource('users', 'UsersController').only(['index', 'show']);
+  Route.get('users/:username', 'UsersController.show');
   Route.resource('posts', 'PostsController').apiOnly().except(['show']);
+  Route.post('likes', 'LikesController.store');
+  Route.delete('likes/:post_id', 'LikesController.destroy');
 }).middleware(['auth']);

@@ -43,6 +43,11 @@ export default class Post extends BaseModel {
   @manyToMany(() => User, { pivotTable: 'likes' })
   public likes: ManyToMany<typeof User>;
 
+  @computed({ serializeAs: 'likes_count' })
+  public get likesCount() {
+    return Number(this.$extras.likes_count);
+  }
+
   @computed()
   public get updated() {
     return this.createdAt < this.updatedAt;
