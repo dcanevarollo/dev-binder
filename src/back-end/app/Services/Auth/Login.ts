@@ -7,7 +7,7 @@ interface Token {
   expires_at?: string;
 }
 
-export class Login {
+export default class Login {
   constructor(
     private data: {
       name: string;

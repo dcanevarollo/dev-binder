@@ -39,6 +39,11 @@ export default class ExceptionHandler extends HttpExceptionHandler {
         message = 'Você precisa estar autenticado para acessar esse recurso';
         break;
       }
+      case 403: {
+        if (error.message) message = error.message;
+        else message = 'Você não tem acesso a esse recurso';
+        break;
+      }
       case 422: {
         message = 'Erro de validação';
 

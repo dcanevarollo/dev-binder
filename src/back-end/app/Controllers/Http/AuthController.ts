@@ -1,6 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import UserValidator from 'App/Validators/UserValidator';
-import { Login } from 'App/Services/Auth/Login';
+import Login from 'App/Services/Auth/Login';
 
 export default class AuthController {
   public index({ response, auth }: HttpContextContract) {
@@ -22,6 +22,6 @@ export default class AuthController {
   public async logout({ response, auth }: HttpContextContract) {
     await auth.logout();
 
-    return response.ok({});
+    return response.ok(null);
   }
 }

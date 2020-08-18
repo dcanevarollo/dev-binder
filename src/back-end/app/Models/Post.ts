@@ -2,14 +2,12 @@ import { DateTime } from 'luxon';
 import {
   BaseModel,
   column,
-  hasMany,
-  HasMany,
   belongsTo,
   BelongsTo,
   manyToMany,
   ManyToMany,
+  computed,
 } from '@ioc:Adonis/Lucid/Orm';
-import File from './File';
 import User from './User';
 
 export default class Post extends BaseModel {
@@ -33,18 +31,20 @@ export default class Post extends BaseModel {
     serialize: (value: DateTime) => {
       return {
         default: value,
-        formatted: value.setLocale('pt-BR').toFormat('LLL'),
+        formatted: value.setLocale('pt-BR').toFormat('DDDD'),
       };
     },
   })
   public createdAt: DateTime;
 
-  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  @column.dateTime({ autoCreate: true, autoUpdate: true, serializeAs: null })
   public updatedAt: DateTime;
-
-  @hasMany(() => File)
-  public files: HasMany<typeof File>;
 
   @manyToMany(() => User, { pivotTable: 'likes' })
   public likes: ManyToMany<typeof User>;
+
+  @computed()
+  public get updated() {
+    return this.createdAt < this.updatedAt;
+  }
 }

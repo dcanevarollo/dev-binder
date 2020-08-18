@@ -26,4 +26,5 @@ Route.group(() => {
   Route.get('auth', 'AuthController.index');
   Route.delete('auth/logout', 'AuthController.logout');
   Route.resource('users', 'UsersController').only(['index', 'show']);
+  Route.resource('posts', 'PostsController').apiOnly().except(['show']);
 }).middleware(['auth']);
