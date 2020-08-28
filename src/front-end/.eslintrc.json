@@ -1,0 +1,7 @@
+{
+  "extends": ["airbnb-typescript-prettier"],
+  "rules": {
+    "camelcase": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off"
+  }
+}
