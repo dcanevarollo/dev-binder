@@ -7,6 +7,7 @@ export default class Teches extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').primary().defaultTo(this.raw('uuid_generate_v4()'));
       table.string('name').notNullable();
+      table.string('icon').notNullable();
       table.timestamps(true);
     });
   }

@@ -14,8 +14,8 @@ export default class FollowerValidator {
   public cacheKey = this.ctx.routeKey;
 
   public messages = {
-    required: 'O campo user_id é obrigatório',
-    uuid: 'Forneça um id válido',
-    exists: 'Não existe um usuário com o id informado',
+    required: 'The {{ field }} is required',
+    uuid: 'Please, provide a valid uuid',
+    exists: 'User not found',
   };
 }

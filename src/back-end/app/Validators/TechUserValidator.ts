@@ -18,8 +18,8 @@ export default class TechUserValidator {
   public cacheKey = this.ctx.routeKey;
 
   public messages = {
-    required: 'O campo {{ field }} é obrigatório',
-    uuid: 'Forneça um id válido',
-    exists: 'Não existe uma tech com o id informado',
+    required: 'The {{ field }} is required',
+    uuid: 'Please, provide a valid uuid',
+    exists: 'Tech not found',
   };
 }

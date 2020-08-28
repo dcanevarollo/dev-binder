@@ -25,7 +25,7 @@ export default class User extends BaseModel {
   public username: string;
 
   @column({ serializeAs: null })
-  public password: string;
+  public password?: string;
 
   @column({ serializeAs: null })
   public rememberMeToken?: string;
@@ -34,7 +34,10 @@ export default class User extends BaseModel {
   public avatarUrl?: string;
 
   @column()
-  public currentJob?: string;
+  public company?: string;
+
+  @column()
+  public location?: string;
 
   @column()
   public bio?: string;
@@ -47,7 +50,8 @@ export default class User extends BaseModel {
 
   @computed({ serializeAs: 'github_url' })
   public get githubUrl() {
-    return `https://github.com/${this.username}`;
+    // Users without password means that he had registered by GitHub OAuth
+    return this.password ? null : `https://github.com/${this.username}`;
   }
 
   @hasMany(() => Post)
@@ -77,7 +81,8 @@ export default class User extends BaseModel {
 
   @beforeSave()
   public static async hashPassword(user: User) {
-    if (user.$dirty.password) user.password = await Hash.make(user.password);
+    if (user.password && user.$dirty.password)
+      user.password = await Hash.make(user.password);
   }
 
   @computed({ serializeAs: 'followers_count' })

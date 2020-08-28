@@ -14,6 +14,6 @@ import { Exception } from '@poppinss/utils';
 */
 export default class NotAllowedException extends Exception {
   constructor() {
-    super('Você não tem acesso a esse recurso', 403);
+    super('You do not have access to this resource.', 403);
   }
 }

@@ -5,14 +5,18 @@ export default class LoginValidator {
   constructor(private ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    username: schema.string(),
-    password: schema.string({}, [rules.minLength(6)]),
+    username: schema.string({}, [rules.requiredIfNotExists('code')]),
+    password: schema.string({}, [rules.requiredIfNotExists('code')]),
+    code: schema.string({}, [
+      rules.requiredIfNotExistsAll(['username', 'password']),
+    ]),
   });
 
   public cacheKey = this.ctx.routeKey;
 
   public messages = {
-    required: 'O campo "{{ field }}" é obrigatório',
-    'password.minLength': 'A senha deve ter, pelo menos, 6 caracteres',
+    required: 'The "{{ field }}" is required',
+    requiredIfNotExistsAll: 'The {{ field }} is required',
+    requiredIfNotExists: 'The {{ field }} is required',
   };
 }

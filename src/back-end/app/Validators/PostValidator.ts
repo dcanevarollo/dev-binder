@@ -12,6 +12,6 @@ export default class PostValidator {
   public cacheKey = this.ctx.routeKey;
 
   public messages = {
-    required: 'O campo {{ field }} é obrigatório',
+    required: 'The {{ field }} is required to post',
   };
 }
