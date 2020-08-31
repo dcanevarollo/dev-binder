@@ -2,6 +2,8 @@
   "extends": ["airbnb-typescript-prettier"],
   "rules": {
     "camelcase": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off"
   }
 }
