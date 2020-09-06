@@ -5,7 +5,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import User from '../models/user.model';
 import api from '../services/api';
 
-interface AuthObject {
+interface Auth {
   signed: boolean;
   user: User | null;
   signIn(credentials: { username: string; password: string }): Promise<void>;
@@ -23,7 +23,7 @@ const accessKey = '@dev-binder/access-token';
 
 const userKey = '@dev-binder/auth-user';
 
-const AuthContext = createContext<AuthObject>({} as AuthObject);
+const AuthContext = createContext<Auth>({} as Auth);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [authUser, setAuthUser] = useState<User | null>(null);
