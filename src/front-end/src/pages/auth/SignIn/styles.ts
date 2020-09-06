@@ -43,5 +43,5 @@ export const FormContainer = styled.div`
   width: 400px;
   border: 2px solid ${props => props.theme.colors.primary};
   border-radius: 40px;
-  padding: 16px;
+  padding: 20px;
 `;

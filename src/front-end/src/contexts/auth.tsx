@@ -5,11 +5,16 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import User from '../models/user.model';
 import api from '../services/api';
 
+export interface Credentials {
+  username: string;
+  password: string;
+}
+
 interface Auth {
   signed: boolean;
   user: User | null;
-  signIn(credentials: { username: string; password: string }): Promise<void>;
-  socialSignIn(token: string): Promise<void>;
+  signIn(credentials: Credentials): Promise<void>;
+  gitHubSignIn(token: string): Promise<void>;
   signOut(): Promise<void>;
 }
 
@@ -61,7 +66,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
   }
 
-  async function socialSignIn(token: string) {}
+  async function gitHubSignIn(token: string) {}
 
   async function signOut() {
     try {
@@ -81,7 +86,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         signed: !!authUser,
         user: authUser,
         signIn,
-        socialSignIn,
+        gitHubSignIn,
         signOut,
       }}
     >
