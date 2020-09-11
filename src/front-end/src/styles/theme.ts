@@ -1,4 +1,6 @@
-const theme = {
+import { createMuiTheme } from '@material-ui/core/styles';
+
+export const styledTheme = {
   colors: {
     background: '#2B2B2B',
     text: '#E5E5E5',
@@ -7,4 +9,14 @@ const theme = {
   },
 };
 
-export default theme;
+export const muiTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+    primary: {
+      main: styledTheme.colors.primary,
+    },
+    secondary: {
+      main: styledTheme.colors.accent,
+    },
+  },
+});

@@ -1,25 +1,28 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider as StyledProvider } from 'styled-components';
+import { ThemeProvider as MuiProvider } from '@material-ui/styles';
 
 import GlobalStyle from './styles/global';
-import theme from './styles/theme';
+import { styledTheme, muiTheme } from './styles/theme';
 import { AuthProvider } from './contexts/auth';
 import Routes from './routes';
 import Navbar from './components/Navbar';
 
 const App: React.FC = () => (
-  <ThemeProvider theme={theme}>
-    <AuthProvider>
-      <Navbar />
+  <StyledProvider theme={styledTheme}>
+    <MuiProvider theme={muiTheme}>
+      <AuthProvider>
+        <Navbar />
 
-      <BrowserRouter>
-        <Routes />
-      </BrowserRouter>
-    </AuthProvider>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+      </AuthProvider>
 
-    <GlobalStyle />
-  </ThemeProvider>
+      <GlobalStyle />
+    </MuiProvider>
+  </StyledProvider>
 );
 
 export default App;

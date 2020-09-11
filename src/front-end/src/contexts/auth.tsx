@@ -24,18 +24,14 @@ interface Token {
   expires_at: string;
 }
 
-const accessKey = '@dev-binder/access-token';
-
-const userKey = '@dev-binder/auth-user';
-
 const AuthContext = createContext<Auth>({} as Auth);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [authUser, setAuthUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const tokenStored = localStorage.getItem(accessKey);
-    const userStored = localStorage.getItem(userKey);
+    const tokenStored = localStorage.getItem('@dev-binder/access-token');
+    const userStored = localStorage.getItem('@dev-binder/access-token');
 
     if (tokenStored && userStored) {
       const token: Token = JSON.parse(tokenStored);
@@ -59,8 +55,8 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       setAuthUser(user);
 
-      localStorage.setItem(accessKey, JSON.stringify(token));
-      localStorage.setItem(userKey, JSON.stringify(user));
+      localStorage.setItem('@dev-binder/access-token', JSON.stringify(token));
+      localStorage.setItem('@dev-binder/access-token', JSON.stringify(user));
     } catch (error) {
       console.error(error);
     }
