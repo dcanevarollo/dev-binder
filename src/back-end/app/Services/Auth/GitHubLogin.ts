@@ -53,6 +53,8 @@ export default class GitHubLogin {
       },
     );
 
+    await user.related('tokens').query().where('type', 'opaque_token').delete();
+
     const apiToken = await this.auth.login(user, { expiresIn: '7 days' });
 
     return { token: apiToken, user };

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { FormHandles, SubmitHandler } from '@unform/core';
 import { Form } from '@unform/web';
-import Button from '@material-ui/core/Button';
+import { Button, Link } from '@material-ui/core';
 
 import {
   Container,
@@ -12,14 +13,18 @@ import {
 import { useAuth, Credentials } from '../../../contexts/auth';
 import InputField from '../../../components/InputField';
 import GitHubButton from '../../../components/GitHubButton';
+import validator, { credentials } from '../../../validators';
 
 const SignIn: React.FC = () => {
   const { signIn } = useAuth();
 
-  // TODO : validate fields
-  function login(data: Credentials) {
-    signIn('credential', undefined, data);
-  }
+  const formRef = useRef<FormHandles>(null);
+
+  const login: SubmitHandler<Credentials> = async data => {
+    const valid = await validator(credentials, data, formRef);
+
+    if (valid) signIn('credential', undefined, data);
+  };
 
   return (
     <Container>
@@ -34,15 +39,21 @@ const SignIn: React.FC = () => {
       </LeftSide>
 
       <RightSide>
-        <Form onSubmit={login}>
+        <Form ref={formRef} onSubmit={login}>
           <FormBox>
             <div>
               <InputField name="username" label="Username" />
               <InputField name="password" label="Password" type="password" />
-
               <Button type="submit" variant="contained" color="secondary">
-                Entrar
+                SIGN IN
               </Button>
+
+              <span>
+                Don&apos;t have an account?
+                <Link href="/register" color="secondary">
+                  Sign up!
+                </Link>
+              </span>
             </div>
 
             <SocialLoginContainer>

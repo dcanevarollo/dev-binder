@@ -57,6 +57,18 @@ export const FormBox = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
+
+    button {
+      margin: 8px 0;
+    }
+
+    span {
+      font-size: 14px;
+    }
+
+    a {
+      margin-left: 5px;
+    }
   }
 `;
 

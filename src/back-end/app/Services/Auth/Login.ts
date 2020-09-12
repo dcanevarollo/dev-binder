@@ -1,4 +1,5 @@
 import { AuthContract } from '@ioc:Adonis/Addons/Auth';
+import NoPasswordException from 'App/Exceptions/NoPasswordException';
 import User from 'App/Models/User';
 
 interface Token {
@@ -19,6 +20,8 @@ export default class Login {
     const { username, password } = this.credentials;
 
     const user = await User.findByOrFail('username', username);
+
+    if (!user.password) throw new NoPasswordException();
 
     await user.related('tokens').query().where('type', 'opaque_token').delete();
 

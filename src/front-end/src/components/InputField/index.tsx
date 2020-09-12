@@ -1,22 +1,24 @@
 import React, { useEffect, useRef } from 'react';
 import { useField } from '@unform/core';
 import TextField, { StandardTextFieldProps } from '@material-ui/core/TextField';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 interface Props extends StandardTextFieldProps {
   name: string;
 }
 
-const useStyles = makeStyles(() =>
+type InputProps = JSX.IntrinsicElements['input'] & Props;
+
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     input: {
-      marginBottom: '24px',
+      marginBottom: theme.spacing(3),
     },
   })
 );
 
-const InputField: React.FC<Props> = ({ name, ...rest }) => {
-  const inputRef = useRef(null);
+const InputField: React.FC<InputProps> = ({ name, ...rest }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const {
     fieldName,
@@ -38,7 +40,7 @@ const InputField: React.FC<Props> = ({ name, ...rest }) => {
 
   return (
     <TextField
-      ref={inputRef}
+      inputRef={inputRef}
       defaultValue={defaultValue}
       onFocus={clearError}
       error={!!error}
