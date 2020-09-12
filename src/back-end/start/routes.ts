@@ -21,9 +21,9 @@
 import Route from '@ioc:Adonis/Core/Route';
 
 Route.post('auth/login', 'AuthController.login');
+Route.post('users', 'UsersController.store');
 
 Route.group(() => {
-  Route.get('auth', 'AuthController.index');
   Route.delete('auth/logout', 'AuthController.logout');
   Route.get('users/:username', 'UsersController.show');
   Route.resource('posts', 'PostsController').apiOnly().except(['show']);

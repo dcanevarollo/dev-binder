@@ -1,22 +1,20 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import LoginValidator from 'App/Validators/LoginValidator';
-import Login from 'App/Services/Auth/Login';
+import Login, { Credentials } from 'App/Services/Auth/Login';
+import GitHubLogin from 'App/Services/Auth/GitHubLogin';
 
 export default class AuthController {
-  public index({ response, auth }: HttpContextContract) {
-    const { user } = auth;
-
-    return response.json(user);
-  }
-
   public async login({ request, response, auth }: HttpContextContract) {
     const credentials = await request.validate(LoginValidator);
 
-    const service = new Login(credentials, auth);
+    let service: GitHubLogin | Login;
 
-    const token = await service.execute();
+    if (credentials.code) service = new GitHubLogin(credentials.code, auth);
+    else service = new Login(credentials as Credentials, auth);
 
-    return response.created(token);
+    const data = await service.execute();
+
+    return response.accepted(data);
   }
 
   public async logout({ response, auth }: HttpContextContract) {

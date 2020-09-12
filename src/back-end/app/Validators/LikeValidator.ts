@@ -14,8 +14,8 @@ export default class LikeValidator {
   public cacheKey = this.ctx.routeKey;
 
   public messages = {
-    required: 'O campo post_id é obrigatório',
-    uuid: 'Forneça um id válido',
-    exists: 'Não existe um post com o id informado',
+    required: 'The {{ field }} is required',
+    uuid: 'Please, provide a valid uuid',
+    exists: 'Post not found',
   };
 }
