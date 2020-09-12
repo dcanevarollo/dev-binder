@@ -48,7 +48,23 @@ export const FormBox = styled.div`
   height: 400px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   border: 2px solid ${props => props.theme.colors.primary};
   border-radius: 40px;
   padding: 40px;
+
+  div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+export const SocialLoginContainer = styled(ContentFlex)`
+  justify-content: flex-end;
+  align-items: center;
+
+  p {
+    margin-bottom: 14px;
+  }
 `;

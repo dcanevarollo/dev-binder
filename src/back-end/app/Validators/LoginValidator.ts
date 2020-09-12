@@ -5,9 +5,9 @@ export default class LoginValidator {
   constructor(private ctx: HttpContextContract) {}
 
   public schema = schema.create({
-    username: schema.string({}, [rules.requiredIfNotExists('code')]),
-    password: schema.string({}, [rules.requiredIfNotExists('code')]),
-    code: schema.string({}, [
+    username: schema.string.optional({}, [rules.requiredIfNotExists('code')]),
+    password: schema.string.optional({}, [rules.requiredIfNotExists('code')]),
+    code: schema.string.optional({}, [
       rules.requiredIfNotExistsAll(['username', 'password']),
     ]),
   });

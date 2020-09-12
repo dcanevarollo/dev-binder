@@ -7,11 +7,13 @@ interface Token {
   expires_at: string;
 }
 
+export interface Credentials {
+  username: string;
+  password: string;
+}
+
 export default class Login {
-  constructor(
-    private credentials: { username: string; password: string },
-    private auth: AuthContract,
-  ) {}
+  constructor(private credentials: Credentials, private auth: AuthContract) {}
 
   public async execute() {
     const { username, password } = this.credentials;

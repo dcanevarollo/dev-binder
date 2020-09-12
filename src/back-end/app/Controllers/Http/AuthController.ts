@@ -1,6 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import LoginValidator from 'App/Validators/LoginValidator';
-import Login from 'App/Services/Auth/Login';
+import Login, { Credentials } from 'App/Services/Auth/Login';
 import GitHubLogin from 'App/Services/Auth/GitHubLogin';
 
 export default class AuthController {
@@ -10,7 +10,7 @@ export default class AuthController {
     let service: GitHubLogin | Login;
 
     if (credentials.code) service = new GitHubLogin(credentials.code, auth);
-    else service = new Login(credentials, auth);
+    else service = new Login(credentials as Credentials, auth);
 
     const data = await service.execute();
 

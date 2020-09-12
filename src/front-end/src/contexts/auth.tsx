@@ -1,6 +1,12 @@
 /* eslint-disable no-console */
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
 
 import User from '../models/user.model';
 import api from '../services/api';
@@ -10,11 +16,14 @@ export interface Credentials {
   password: string;
 }
 
-interface Auth {
+interface CtxProps {
   signed: boolean;
   user: User | null;
-  signIn(credentials: Credentials): Promise<void>;
-  gitHubSignIn(token: string): Promise<void>;
+  signIn(
+    type: 'social' | 'credential',
+    code?: string,
+    credentials?: Credentials
+  ): Promise<void>;
   signOut(): Promise<void>;
 }
 
@@ -24,45 +33,50 @@ interface Token {
   expires_at: string;
 }
 
-const AuthContext = createContext<Auth>({} as Auth);
+interface Auth {
+  token: Token;
+  user: User;
+}
+
+const AuthContext = createContext<CtxProps>({} as CtxProps);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [authUser, setAuthUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const tokenStored = localStorage.getItem('@dev-binder/access-token');
-    const userStored = localStorage.getItem('@dev-binder/access-token');
+    const auth = localStorage.getItem('@dev-binder/auth') as string;
 
-    if (tokenStored && userStored) {
-      const token: Token = JSON.parse(tokenStored);
+    if (auth) {
+      const { token, user } = JSON.parse(auth) as Auth;
+
       api.defaults.headers.Authorization = `Bearer ${token.token}`;
 
-      const user: User = JSON.parse(userStored);
       setAuthUser(user);
     }
   }, []);
 
-  async function signIn(credentials: { username: string; password: string }) {
-    try {
-      const response = await api.post<{ token: Token; user: User }>(
-        'auth/login',
-        credentials
-      );
+  const signIn = useCallback(
+    async (
+      type: 'social' | 'credential',
+      code?: string,
+      credentials?: Credentials
+    ) => {
+      try {
+        const payload = type === 'social' ? { code } : credentials;
 
-      const { token, user } = response.data;
+        const { data: auth } = await api.post<Auth>('auth/login', payload);
 
-      api.defaults.headers.Authorization = `Bearer ${token.token}`;
+        api.defaults.headers.Authorization = `Bearer ${auth.token.token}`;
 
-      setAuthUser(user);
+        setAuthUser(auth.user);
 
-      localStorage.setItem('@dev-binder/access-token', JSON.stringify(token));
-      localStorage.setItem('@dev-binder/access-token', JSON.stringify(user));
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function gitHubSignIn(token: string) {}
+        localStorage.setItem('@dev-binder/auth', JSON.stringify(auth));
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    []
+  );
 
   async function signOut() {
     try {
@@ -72,7 +86,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     } finally {
       setAuthUser(null);
 
-      localStorage.clear();
+      localStorage.removeItem('@dev-binder/auth');
     }
   }
 
@@ -82,7 +96,6 @@ export const AuthProvider: React.FC = ({ children }) => {
         signed: !!authUser,
         user: authUser,
         signIn,
-        gitHubSignIn,
         signOut,
       }}
     >
