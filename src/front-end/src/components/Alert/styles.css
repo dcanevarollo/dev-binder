@@ -1,0 +1,14 @@
+.Toastify__toast-container {
+  width: 600px !important;
+  height: 70px !important;
+  padding: 0 !important;
+}
+
+.Toastify__toast {
+  padding: 0 !important;
+  border-radius: 8px !important;
+}
+
+.Toastify__toast-body {
+  margin: 0 !important;
+}

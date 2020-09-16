@@ -1,6 +1,8 @@
-import { RefObject } from 'react';
+import React, { RefObject } from 'react';
 import { ObjectSchema, ValidationError } from 'yup';
 import { FormHandles } from '@unform/core';
+import { toast } from 'react-toastify';
+import Alert from '../components/Alert';
 
 export { default as credentials } from './credentials';
 
@@ -28,6 +30,8 @@ export default async function validator(
       });
 
     if (formRef.current) formRef.current.setErrors(messages);
+
+    toast.error(<Alert title="Error!" message="Please, check the fields!" />);
 
     return false;
   }

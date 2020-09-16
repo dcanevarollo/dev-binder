@@ -7,7 +7,9 @@ import React, {
   useEffect,
   useCallback,
 } from 'react';
+import { toast } from 'react-toastify';
 
+import Alert from '../components/Alert';
 import User from '../models/user.model';
 import api from '../services/api';
 
@@ -72,7 +74,9 @@ export const AuthProvider: React.FC = ({ children }) => {
 
         localStorage.setItem('@dev-binder/auth', JSON.stringify(auth));
       } catch (error) {
-        console.error(error);
+        const { message } = error.response?.data;
+
+        toast.error(<Alert title="Error!" message={message} />);
       }
     },
     []
