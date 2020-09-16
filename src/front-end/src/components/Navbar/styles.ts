@@ -17,3 +17,17 @@ export const Nav = styled.nav`
     align-items: center;
   }
 `;
+
+export const UserAvatar = styled.img`
+  width: 30px;
+  height: 30px;
+  margin-right: 16px;
+  border: 3px solid white;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    border-color: ${props => props.theme.colors.accent};
+  }
+`;

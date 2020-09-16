@@ -1,5 +1,5 @@
 import React from 'react';
-import Info from '@material-ui/icons/Info';
+import InfoIcon from '@material-ui/icons/Info';
 
 import { Container } from './styles';
 
@@ -10,7 +10,7 @@ interface Props {
 
 const Alert: React.FC<Props> = ({ title, message }) => (
   <Container>
-    <Info />
+    <InfoIcon />
     <strong>{title}</strong>
     <span>{message}</span>
   </Container>
